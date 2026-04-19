@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Auth\GoogleController;
 use App\Http\Controllers\SSEController;
+use App\Http\Middleware\IsSupplier;
 
 Route::get('/sse', [SSEController::class, 'sendSSE']);
 
@@ -24,12 +25,13 @@ Route::get('auth/google/callback', [GoogleController::class, 'handleGoogleCallba
 Auth::routes();
 Auth::routes(['verify' => true]);
 //account
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('/reviews/{product_slug}', [App\Http\Controllers\ReviewsController::class, 'showReviews'])->name('product.reviews');
 Route::get('/my-account', [App\Http\Controllers\HomeController::class, 'index'])->name('myaccount');
-Route::get('/my-account/order/{slug}', [App\Http\Controllers\HomeController::class, 'viewOrder'])->name('myaccount.vieworder');
-Route::get('/my-account/orders', [App\Http\Controllers\HomeController::class, 'orders'])->name('myaccount.orders');
-Route::get('/my-account/coupons', [App\Http\Controllers\HomeController::class, 'coupons'])->name('myaccount.coupons');
+// Route::get('/reviews/{product_slug}', [App\Http\Controllers\ReviewsController::class, 'showReviews'])->name('product.reviews');
+// Route::get('/my-account', [App\Http\Controllers\HomeController::class, 'index'])->name('myaccount');
+// Route::get('/my-account/order/{slug}', [App\Http\Controllers\HomeController::class, 'viewOrder'])->name('myaccount.vieworder');
+// Route::get('/my-account/orders', [App\Http\Controllers\HomeController::class, 'orders'])->name('myaccount.orders');
+// Route::get('/my-account/coupons', [App\Http\Controllers\HomeController::class, 'coupons'])->name('myaccount.coupons');
+Route::get('/checkout', [App\Http\Controllers\HomeController::class, 'checkout'])->name('checkout');
 
 
 
@@ -56,6 +58,17 @@ Route::middleware(['auth', AdminMiddleware::class])->prefix('admin')->group(func
     Route::get('/extract-emails',[App\Http\Controllers\AdminController::class,'extractEmails'])->name('admin.users.extractemails');
 });
 
+
+
+// suppliers
+Route::get('/supplier/register', [App\Http\Controllers\SuppliersController::class, 'create'])->name('supplier.register');
+
+// middleware is_supplier
+
+Route::middleware(['auth', IsSupplier::class])->prefix('supplier')->group(function () {
+    Route::get('/dashboard', [App\Http\Controllers\SuppliersController::class, 'index'])->name('supplier.dashboard');
+    Route::get('/dashboard/create-quoataion/{id}', [App\Http\Controllers\SuppliersController::class, 'createQuotation'])->name('supplier.create-quoatation');
+});
 
 // Route::get('/.env', function(Request $request) {
 //     abort(404);

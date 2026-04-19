@@ -36,7 +36,7 @@
                                 </a>
                                 @endauth
                                 <div class="btn">
-                                     @livewire('shop.carbutton')
+                                     {{-- @livewire('shop.carbutton') --}}
                                 </div>
                                  {{-- @auth
                                 <a href="{{route('myaccount')}}" class="btn btn-default text-capitalize">

@@ -11,10 +11,11 @@
                             <img src="{{ asset($selected_product->image_path) }}" alt="" class="img-fluid">
 
                         </div>
+
                         <div class="p-3">
                             <h5 class="title-md">{{ $selected_product->title }}</h5>
 
-                           @if ($selected_product->rating)
+                           {{-- @if ($selected_product->rating)
                                <div>
                              <div class="d-flex star-rating mb-2">
                                 @for ($i = 1; $i <= 5; $i++)
@@ -30,11 +31,11 @@
                                 <span> ({{$selected_product->getRatingScore()['average_score']}}) | <a href="{{route('product.reviews', $selected_product->slug)}}"> {{$selected_product->getRatingScore()['total_ratings']}} {{__('Reviews')}}</a></span>
                             </div>
                            </div>
-                           @endif
+                           @endif --}}
                            
                             
                             
-                              <div class="mb-3 d-flex">
+                              {{-- <div class="mb-3 d-flex">
                                 <h5 class="fw-bold mb-0">{{ number_format($selected_product->discounted_price, 2, ',', ' ') }} €</h5>
                                 <div class="mx-3">
                                    @if($selected_product->points > 0)
@@ -43,13 +44,15 @@
                                  <span class="badge bg-dark-subtle border border-dark-subtle text-dark-emphasis rounded-pill">{{__('Coupon not applied')}}</span>
                                 @endif
                                </div>
-                              </div>
+                              </div> --}}
                             
                             <p>{{ $selected_product->description }}</p>
 
 
 
                         </div>
+
+
                         <div class="p-3 mb-3">
 
                             <div>
@@ -73,7 +76,6 @@
                                                                 name="radioDefault_{{ $option_id }}"
                                                                 id="rd{{ $item->id }}" value="{{ $item->id }}"
                                                                 wire:model.live="variant.{{ $option_id }}"
-                                                                wire:click="calculateTotal"
                                                                 @if ($loop->first) checked @endif>
                                                             <label class="form-check-label" for="rd{{ $item->id }}">
                                                                 <div>{{ $item->value }}</div>
@@ -113,7 +115,7 @@
                                                     <div class="form-check mb-3">
                                                         <input class="form-check-input" type="checkbox"
                                                             value="{{ $item->id }}" id="chk{{ $item->id }}"
-                                                            wire:model.live="choices" wire:click="calculateTotal">
+                                                            wire:model.live="choices">
                                                         <label class="form-check-label" for="chk{{ $item->id }}">
                                                             {{ $item->getChoiceName()->Choice_name }}
                                                         </label>
@@ -180,9 +182,9 @@
                             </div>
                             <div class="col-8">
                                 <button class="btn-add-cart" wire:click="addCart"
-                                    wire:loading.attr="disabled">{{ __('ADD TO BAG') }}
+                                    wire:loading.attr="disabled">{{ __('ADD') }}
 
-                                    ({{ number_format($grand_total, 2, ',', ' ') }} €)
+                                    
                                 </button>
                             </div>
                         </div>

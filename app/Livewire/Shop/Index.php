@@ -7,8 +7,10 @@ use App\Models\Category;
 use App\Models\Product;
 use App\Models\ProductChoice;
 use App\Models\Variant;
+use App\Models\InfoCollection;
+use Illuminate\Support\Facades\Session;
 
-
+use function Pest\Laravel\session;
 
 class Index extends Component
 {
@@ -28,6 +30,10 @@ class Index extends Component
     public $cat_id;
     public $success_message;
     public $error_message;
+    public $questions;
+    public $answers = [];
+    public $multiple_choices = [];
+    public $m_choices = [];
 
     protected $queryString = [
         'category' => ['except' => ''] // optional, removes empty category from URL
@@ -36,77 +42,62 @@ class Index extends Component
 
     public function render()
     {
-        // $products = Product::query()
-        //     ->when($this->category, function ($query) {
-        //         $query->where('category_id', $this->category);
-        //     })
-        //     ->where('status', 'active')
-        //     ->get();
 
-        // return view('livewire.shop.index', [
-        //     'products' => $products,
-        // ]);
         return view('livewire.shop.index');
     }
 
+    public function rules()
+    {
+        $rules = [];
+
+        foreach ($this->questions as $question) {
+            if ($question->type === 'radio') {
+                // Require at least one selected option
+                $rules["answers.{$question->id}"] = 'required';
+            }
+        }
+
+        return $rules;
+    }
+
+   
+
     public function mount($products)
     {
-        // dd($products);
-        // $this->cat_id = Category::where('category_name', $category);
-        //  $products = Product::query()
-        //     ->when($category, function ($query) {
-        //         $query->where('category_id', $this->cat_id);
-        //     })
-        //     ->where('status', 'active')
-        //     ->get();
+        // Session::forget('user_choices');
+        $this->questions = InfoCollection::where('type', 'radio')->get();
+        $this->multiple_choices = InfoCollection::where('type', 'checkbox')->get();
+
         $this->products = $products;
-        
+
         $this->categories = Category::all();
         $this->variant = [];
-        $this->refreshCart();
-        // dd($this->selected_product->getGroupedOption());
     }
-    public function refreshCart(){
-          $this->cart_items = session('cart', []);
+
+     public function save()
+    {
+
+
+    // dd($this->m_choices);
+        $this->validate();
+
+        Session::put('user_choices', $this->answers);
+        Session::put('user_choices_collection', $this->m_choices);
+        return redirect()->to(route('checkout'));
+        
+       
+    }
+    public function refreshCart()
+    {
+        $this->cart_items = session('cart', []);
         //   $this->calculateTotal();
-        
-        
-    }
-
-    public function calculateTotal()
-    {
-
-        // $ = $this->selected_product->discounted_price;
-        $total_v = 0;
-
-        foreach ($this->variant as $option_id => $item) {
-            // find the database value
-            $v = Variant::findOrFail($item);
-            $total_v = $v->price + $total_v;
-        }
-
-        $total_c = 0;
-        foreach ($this->choices as $item) {
-            $pc = ProductChoice::findOrFail($item);
-            $total_c = $pc->price + $total_c;
-        }
 
 
-
-
-        $pprice = $this->selected_product->discounted_price;
-
-
-        // $this->grand_total = ($pprice + $total_v + $total_c) * $this->quantity;
-        $this->grand_total = ($pprice + $total_v + $total_c);
     }
 
 
 
-    public function selectCategory($id)
-    {
-        $this->selected_category_id = $id;
-    }
+
 
     public function selectProduct($id)
     {
@@ -126,28 +117,15 @@ class Index extends Component
             }
         }
 
-        $this->calculateTotal();
+        // $this->calculateTotal();
         $this->openModal();
     }
 
     public function resetVariant()
     {
 
-        //   if(count($this->selected_product->getGroupedOption()) > 0){
-
-        //     foreach ($this->selected_product->getGroupedOption() as $option_id => $variants) {
-        //        $this->variant[$option_id] = $variants->first()->id;
-        //    }
-        // }
         $this->variant = [];
         $this->choices = [];
-
-
-        // reset all variants and choices
-
-
-
-
     }
 
     public function openModal()
@@ -168,17 +146,17 @@ class Index extends Component
     public function increment()
     {
         $this->quantity++;
-        $this->calculateTotal();
     }
+
+
     public function decrement()
     {
         $this->quantity--;
         if ($this->quantity < 1) {
             $this->quantity = 1;
-            $this->calculateTotal();
+
             return null;
         }
-        $this->calculateTotal();
     }
     private function sortRecursive(&$array)
     {
@@ -217,9 +195,8 @@ class Index extends Component
         ]);
 
         $product_id = $this->selected_product->id;
-        $cart = session()->get('cart', []);
-        //need to be the aphebetical 
-        // shorting 
+        $cart = Session::get('cart', []);
+
 
         $this->variant = array_map(fn($v) => (int) $v, $this->variant);
         $variant = $this->variant;
@@ -230,11 +207,11 @@ class Index extends Component
         $this->sortRecursive($choices);
         $this->sortRecursive($variant);
 
-        
-        
+
+
         // Create a unique key based on product + variant + choices
         $unique_key = $product_id . '-' . md5(json_encode($variant) . json_encode($choices));
-        
+
 
         if (isset($cart[$unique_key])) {
             // If same combination exists, increase quantity
@@ -244,25 +221,21 @@ class Index extends Component
             $cart[$unique_key] = [
                 'product_id' => $product_id,
                 'quantity' => $this->quantity,
-                'price' => $this->grand_total,
+
                 'variants' => $this->variant,
                 'choices' => $choices,
             ];
         }
         $this->variant = [];
         $this->choices = [];
+
+        Session::put('cart', $cart);
         
-        session()->put('cart', $cart);
-        $this->dispatch('itemUpdate');
         $this->dispatch('pop');
-        // $this->dispatch('cartUpdated');
-        // $this->dispatch('open-nav');
+        
         $this->closeModal();
-        // $this->cart_modal = true;
-        // $this->success_message = "Item added to the cart";
-        $this->dispatch('cartMessage',title: 'Cart item has been updated');
-
-
+      
+        $this->dispatch('cartMessage', title: 'Cart item has been updated');
     }
 
     public function openCartModal()
@@ -274,17 +247,15 @@ class Index extends Component
     {
         $this->cart_modal = false;
     }
-    public function removeCartItem($index){
+    public function removeCartItem($index)
+    {
 
-        
-        
-                    unset($this->cart_items[$index]);
-                     $cart = array_values($this->cart_items); // reindex array
-                     $this->cart_items = $cart;
-                    session()->put('cart', $this->cart_items);
-                    $this->dispatch('cartUpdated');
 
-        
-       
+
+        unset($this->cart_items[$index]);
+        $cart = array_values($this->cart_items); // reindex array
+        $this->cart_items = $cart;
+        session()->put('cart', $this->cart_items);
+        $this->dispatch('cartUpdated');
     }
 }

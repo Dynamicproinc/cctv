@@ -1,91 +1,193 @@
 <div>
-    <div class="">
-         {{-- <div class="d-flex justify-content-center">
-              @if (count($categories) > 0)
-                <div class="d-flex mb-3 m-tab">
-                    @foreach ($categories as $item )
-                    <input type="radio" id="rd{{$item->id}}" wire:model.live="category" value="{{$item->id}}">
-                    <label for="rd{{$item->id}}" class="menu-tab">{{$item->category_name}}</label>
-                    
-                    @endforeach
-                
-            </div>
-           @endif
-         </div> --}}
-         {{-- fixed messagebar --}}
-         {{-- @if ($success_message || $error_message)
-            <div class="fixed-message-bar">
-                <div>
-                    @if ($success_message)
-                        <small x-data x-init="setTimeout(() => $wire.set('success_message', ''), 3000)" class="text-success font-weight-bold d-block mt-2">
-                            <i class="bi bi-check-circle-fill"></i> {{ $success_message }}
-                        </small>
-                    @endif
-                    @if ($error_message)
-                        <small x-data x-init="setTimeout(() => $wire.set('error_message', ''), 3000)" class="text-danger font-weight-bold d-block mt-2">
-                            <i class="bi bi-exclamation-circle-fill"></i> {{ $error_message }}
-                        </small>
-                    @endif
-                </div>
-            </div>
-        @endif --}}
-         {{-- end fixed messagebar --}}
+    <div class="container">
 
+        <div class="container py-5">
+            <div class="mb-5 p-4 rounded-4 bg-light border">
 
-            <div>
-                @if(count($products) > 0)
-                   <div class="row">
+                <h5 class="fw-bold mb-1">
+                    {{ __('Select camera types you want') }}
+                </h5>
+                <p class="text-muted small mb-2">
+                    {{ __('You can select the cameras based on your needs, as well as choose the specifications and quantities.') }}
+                </p>
+                <a href="#" class="small text-decoration-none">{{ __('Learn more') }}</a>
+
+            </div>
+
+            @if (count($products) > 0)
+                <div class="row g-4 justify-content-center mb-4">
+
                     @foreach ($products as $item)
-                        
-                    <div class="col-6 col-lg-4 mb-3" >
-                        <div class="product-sm bg-white" wire:click="selectProduct({{ $item->id }})">
-                            <div class="thumb-sm">
-                                <img src="{{asset($item->image_path)}}"
-                                    alt="{{ $item->title }}" class="img-fluid">
-                            </div>
-                            
-                            <div class="p-3 bg-white no-select">
-                                <h6 class="fw-bold lh-sm">{{ $item->title }}</h6>
-                                @if ($item->rating)
-                               <div>
-                             <div class="d-flex star-rating mb-2">
-                                @for ($i = 1; $i <= 5; $i++)
-                                    @if ($i <= $item->getRatingScore()['integer_part'])
-                                        <i class="bi bi-star-fill"></i>
-                                    @else
-                                        <i class="bi bi-star"></i>
-                                    @endif
-                                @endfor
-                                
-
-
-                                <span>({{$item->getRatingScore()['average_score']}})</span>
-                            </div>
-                           </div>
-                           @endif
-                                {{-- <small class="fw-bolder txt-xs text-muted text-uppercase">{{ $item->getCategory()->category_name }}</small> --}}
-                                <h6 class="">{{ number_format($item->discounted_price, 2, ',', ' ') }} €</h6>
+                        <div class="col-12 col-lg-6">
+                            <div class="p-card bg-white shadow-sm d-flex" wire:click="selectProduct({{ $item->id }})" style="cursor: pointer;">
+                                <div class="p-card-img">
+                                    <img src="{{ $item->image_path }}" alt="{{ $item->title }}">
+                                </div>
+                                <div class="px-3 py-2">
+                                    <h5 class="fw-semibold">
+                                        {{ $item->title }}
+                                    </h5>
+                                    <p class="text-muted small">
+                                        {{ Str::limit($item->description, 50) }}
+                                    </p>
+                                </div>
                             </div>
                         </div>
-                    </div>
                     @endforeach
 
+                </div>
+            @else
+                <div class="text-center py-5">
+                    <h5 class="text-muted">
+                        😢 {{ __('No product found!') }}
+                    </h5>
+                </div>
+            @endif
 
-                </div> 
-                @else
-                    <div class="p-5">
-                        <h5 class="text-center text-muted">
-                            😢 {{__('No product found!')}}
-                        </h5>
+
+            {{--  --}}
+            <div>
+                @include('inc.cart_items')
+
+                {{-- question --}}
+                {{-- if product selecte --}}
+
+                {{-- <div>
+    @foreach ($answers as $key => $item)
+        <p>Question {{ $key }}:</p>
+
+        @if (is_array($item))
+            <ul>
+                @foreach ($item as $subKey => $value)
+                    <li>Option {{ $subKey }}</li>
+                @endforeach
+            </ul>
+        @else
+            <p>Answer: {{ $item }}</p>
+        @endif
+
+    @endforeach
+</div> --}}
+                {{-- fetch  --}}
+                @foreach ($questions as $qIndex => $question)
+                    <div class="mb-3 ">
+                        <div class="rounded-4 bg-light border shadow-sm">
+
+                            <!-- Header -->
+                            <div class="p-4 border-bottom">
+                                <h5 class="fw-bold mb-1">
+                                    {{ $question->title }}
+                                </h5>
+                                <p class="text-muted small mb-2">
+                                    {{ $question->description }}
+                                </p>
+                                <a href="#" class="small text-decoration-none">
+                                    {{ __('Learn more') }}
+                                </a>
+                            </div>
+
+                            <!-- Options -->
+                            <div class="list-group list-group-flush">
+                                @foreach ($question->options as $option)
+                                    <label class="list-group-item d-flex align-items-center gap-3 py-3 cursor-pointer">
+
+                                        <input class="form-check-input m-0" type="{{ $question->type }}"
+                                            name="question_{{ $question->id }}"
+                                            @if ($question->type === 'radio') wire:model.live="answers.{{ $question->id }}"
+                                value="{{ $option->id }}"
+                            @else
+                                wire:model.live="answers.{{ $question->id }}.{{ $option->id }}"
+                                value="{{ $option->id }}" @endif
+                                            id="option-{{ $question->id }}-{{ $option->id }}">
+
+                                        <div>
+                                            <div class="fw-semibold">{{ $option->option_name }}</div>
+                                            <small class="text-muted">{{ $option->description }}</small>
+                                        </div>
+                                    </label>
+                                @endforeach
+                            </div>
+
+                            <div class="p-3 bg-white rounded-4"></div>
+                        </div>
+                        {{--  Validation message --}}
+                        @error('answers.' . $question->id)
+                            <div class="alert alert-danger mx-3 mt-2 py-2">
+                                {{ __('An answer is required for this question') }}
+                            </div>
+                        @enderror
                     </div>
-                @endif
-                
+                @endforeach
+
+
+                {{--  --}}
+                <div>
+                    @foreach ($multiple_choices as $qIndex => $mc)
+                        <div class="mb-3 ">
+                            <div class="rounded-4 bg-light border shadow-sm">
+
+                                <!-- Header -->
+                                <div class="p-4 border-bottom">
+                                    <h5 class="fw-bold mb-1">
+                                        {{ $mc->title }}
+                                    </h5>
+                                    <p class="text-muted small mb-2">
+                                        {{ $mc->description }}
+                                    </p>
+                                    <a href="#" class="small text-decoration-none">
+                                        {{ __('Learn more') }}
+                                    </a>
+                                </div>
+
+                                <!-- Options -->
+                                <div class="list-group list-group-flush">
+                                    @foreach ($mc->options as $option)
+                                        <label
+                                            class="list-group-item d-flex align-items-center gap-3 py-3 cursor-pointer">
+
+                                            <input class="form-check-input m-0" type="{{ $mc->type }}"
+                                                name="mc_{{ $mc->id }}"
+                                                wire:model.live="m_choices.{{ $mc->id }}.{{ $option->id }}"
+                                                value="{{ $option->id }}"
+                                                id="option-{{ $mc->id }}-{{ $option->id }}">
+
+                                            <div>
+                                                <div class="fw-semibold">{{ $option->option_name }}</div>
+                                                <small class="text-muted">{{ $option->description }}</small>
+                                            </div>
+                                        </label>
+                                    @endforeach
+                                </div>
+
+                                <div class="p-3 bg-white rounded-4"></div>
+                            </div>
+                            {{--  Validation message --}}
+                            @error('m_choices.' . $mc->id)
+                                <div class="alert alert-danger mx-3 mt-2 py-2">
+                                    {{ __('An answer is required for this question') }}
+                                </div>
+                            @enderror
+                        </div>
+                    @endforeach
+
+                </div>
+                {{--  --}}
+
+
+
+
+                <div>
+                    <p class="small">{{ __('Press Continue to proceed to the next step of the solution.') }}</p>
+                    <button class="btn btn-warning w-100 btn-lg" wire:click="save">{{ __('Continue') }}</button>
+                </div>
             </div>
+            {{--  --}}
         </div>
+
+
         {{-- show product modal --}}
         @if ($product_modal)
-        @include('inc.modal.product')
-            
+            @include('inc.modal.product')
         @endif
 
         {{-- cart modal --}}
@@ -95,4 +197,4 @@
         @endif --}}
         {{--  --}}
         {{--  --}}
-</div>
+    </div>

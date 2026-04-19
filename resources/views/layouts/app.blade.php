@@ -9,12 +9,12 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 {{-- meta  --}}
 <title>@yield('title') {{ config('app.name', 'Laravel') }} - {{__('Delicious Burgers & Fresh Food | Best Online Burger Shop')}}</title>
-<meta name="title" content="{{__('Delicious Burgers & Fresh Food | Best Online Burger Shop')}}">
+{{-- <meta name="title" content="{{__('Delicious Burgers & Fresh Food | Best Online Burger Shop')}}">
 <meta name="description" content="{{__('Order the most delicious, juicy burgers and fresh food online. We serve mouthwatering burgers made from high-quality ingredients — fast delivery and unbeatable taste!')}}">
 <meta name="keywords" content="{{__('burgers, burger shop, online burger delivery, delicious burgers, cheeseburgers, gourmet burgers, fast food, best burgers, fresh food, burger restaurant, burger takeaway')}}">
- <meta property="og:image" content="{{asset('ico/favicon-32x32.png')}}">
+ <meta property="og:image" content="{{asset('ico/favicon-32x32.png')}}"> --}}
 {{--  --}}
-    <title>{{ config('app.name', 'MBrothers Food') }}</title>
+    <title>{{ config('app.name') }}</title>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.bunny.net">
@@ -47,7 +47,7 @@
             </div>
         </div> --}}
         {{-- sidebar end --}}
-        <div style="height:80px"></div>
+        <div style="height:100px"></div>
 
         <main class="container" style="min-height: 100vh; margin-bottom:100px">
             <div class="row justify-content-center">
@@ -56,11 +56,7 @@
                 </div>
             </div>
         </main>
-        {{--  --}}
-       {{-- <div class="fixed-cart">
-        <i class="bi bi-bag"></i>
-       </div> --}}
-        {{--  --}}
+       
         <footer class="text-center py-3 d-flex justify-content-center align-items-center" style="height:150px">
   <div class="container ">
     <div><strong>{{ __('Open Hours')}}</strong></div>

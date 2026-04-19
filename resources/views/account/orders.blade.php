@@ -1,63 +1,43 @@
 @extends('home')
 @section('acc-content')
     <div>
-        <style>
-            td, th {
-                vertical-align: middle !important;
-                font-size: 12px;
-                text-transform: uppercase
-            }
-        </style>
-        @if (count($sales_orders))
-            <div class="tab-pane-table">
-                <table class="table table-striped table-responsive">
-                    <thead class="">
-                        <tr>
-                            <th scope="col">{{ __('Order') }}</th>
-                            <th scope="col">{{ __('Date') }}</th>
-                            <th scope="col">{{ __('Amount') }}</th>
-                            <th scope="col">{{ __('Type') }}</th>
+      <div class="">
+        <div class="mb-3">
+            <div><h4 class="fw-bolder">Ref#: {{$requirement->order_number}}</h4></div>
+            <div>Created at: {{$requirement->created_at->format('d F Y')}}</div>
+            <div>Deadline : {{$requirement->deadline}}</div>
+            <div>Status : {{$requirement->status}}</div>
+            <div>Quotations received: 0</div>
+        </div>
+        <table class="table table-striped">
+  <thead>
+    <tr>
 
-                            <th scope="col">{{ __('Status') }}</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-
-                        @foreach ($sales_orders as $item)
-                            <tr>
-                                <th scope="row">
-                                    
-                                        {{ $item->daily_order_number }}
-                                </th>
-                                <td>
-                                    
-                                        {{ $item->created_at->timezone('Europe/Zagreb')->format('d.m.Y. H:i') }}
-                                    
-                                   
-
-                                </td>
-                                
-                                <td style="text-align: right">
-                                    {{ number_format($item->net_total, 2, ',', ' ') }}  €
-                                       
-                                </td>
-                                <td>
-                                    {{ __($item->order_type) }}
-                                </td>
-                                {{-- <td></td> --}}
-                                {{-- <td style="text-align: right"></td> --}}
-                                <td>
-                                    
-                                        {{ __($item->status) }}
-                                </td>
-                            </tr>
-                        @endforeach
-
-                    </tbody>
-                </table>
-            </div>
-        @else
-            <p class="text-muted">{{ __('No orders found') }}</p>
-        @endif
+        <th scope="col">#</th>
+      <th scope="col">Line Item</th>
+      <th scope="col">Quantity</th>
+      {{-- <th scope="col">Last</th>
+      <th scope="col">Handle</th> --}}
+    </tr>
+  </thead>
+  <tbody>
+  
+   @if(count($requirement->getLineItems()) > 0)
+    @foreach($requirement->getLineItems() as $key => $item)
+    <tr>
+      <th scope="row">{{ $key+1 }}</th>
+      <td>{{$item->line_item}}</td>
+      <td>{{$item->quantity}}</td>
+      
+    </tr>
+   @endforeach
+   @else
+   <tr>
+    <td colspan="3">{{__('No orders found')}}</td>
+   </tr>
+   @endif
+  </tbody>
+</table>
+      </div>
     </div>
 @endsection
