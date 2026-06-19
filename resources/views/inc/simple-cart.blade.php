@@ -1,4 +1,5 @@
-<div class="mb-3">
+<div>
+   <div class="mb-3">
                     <div>
                         <h2 class="form-title">
                             {{ __('Your requirement') }}
@@ -25,7 +26,7 @@
                                     </div>
                                 </div>
                                 <div>
-                                <div class="btn-content p-2">
+                                {{-- <div class="btn-content p-2">
                                     <div class="d-flex">
                                         <div class="d-flex justify-content-between align-items-center me-2">
                                         <button class="btn-rounded"  wire:click="subs('{{ $index }}')"><i class="bi bi-dash"></i></button>
@@ -36,7 +37,7 @@
                                     </div>
                                     <button class="btn-rounded-danger" wire:click="remove('{{ $index }}')"><i class="bi bi-trash"></i></button>
                                     </div>
-                                </div>
+                                </div> --}}
                                   
                                 </div>
                                 
@@ -47,3 +48,4 @@
                         </ol>
                     </div>
                 </div>
+</div>

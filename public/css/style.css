@@ -358,6 +358,20 @@ text-transform: uppercase;
     border: 0;
     outline: 0;
 }
+.btn-rounded-danger {
+    width: 32px;
+    height: 32px;
+    background-color: #ff4d4d73;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    color: #FF4D4D;
+    cursor: pointer;
+    border: 0;
+    outline: 0;
+    font-weight: 400;
+}
 .qty {
     width: 32px;
     height: 32px;

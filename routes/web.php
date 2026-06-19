@@ -39,7 +39,7 @@ Route::get('/', [App\Http\Controllers\ShopController::class, 'index'])->name('sh
 // Route::get('/shop', [App\Http\Controllers\ShopController::class, 'index'])->name('shop.index');
 Route::get('/category/{category}', [App\Http\Controllers\ShopController::class, 'category'])->name('shop.category');
 // Route::get('/shop/{slug}', [App\Http\Controllers\ShopController::class, 'showProduct'])->name('shop.showproduct');
-Route::get('/cart', [App\Http\Controllers\ShopController::class, 'cart'])->name('shop.cart')->middleware(['auth','verified']);
+// Route::get('/cart', [App\Http\Controllers\ShopController::class, 'cart'])->name('shop.cart')->middleware(['auth','verified']);
 
 Route::middleware(['auth', AdminMiddleware::class])->prefix('admin')->group(function () {
     

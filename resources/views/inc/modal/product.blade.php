@@ -85,10 +85,10 @@
                                                         </div>
                                                     </div>
                                                     <div class="col-6">
-                                                        <div class="d-flex justify-content-end">
+                                                        {{-- <div class="d-flex justify-content-end">
                                                             <span>{{ number_format($item->price, 2, ',', ' ') }}
                                                                 €</span>
-                                                        </div>
+                                                        </div> --}}
                                                     </div>
                                                 </div>
                                             @endforeach
@@ -122,11 +122,11 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-6">
-                                                    <div class="d-flex flex-row-reverse">
+                                                    {{-- <div class="d-flex flex-row-reverse">
                                                         <span>{{ number_format($item->price, 2, ',', ' ') }}
                                                             €</span>
 
-                                                    </div>
+                                                    </div> --}}
                                                 </div>
                                             </div>
                                         @endforeach

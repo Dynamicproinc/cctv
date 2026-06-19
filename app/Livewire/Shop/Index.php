@@ -60,7 +60,7 @@ class Index extends Component
         return $rules;
     }
 
-   
+
 
     public function mount($products)
     {
@@ -74,18 +74,16 @@ class Index extends Component
         $this->variant = [];
     }
 
-     public function save()
+    public function save()
     {
 
 
-    // dd($this->m_choices);
+        // dd($this->m_choices);
         $this->validate();
 
         Session::put('user_choices', $this->answers);
         Session::put('user_choices_collection', $this->m_choices);
         return redirect()->to(route('checkout'));
-        
-       
     }
     public function refreshCart()
     {
@@ -230,11 +228,11 @@ class Index extends Component
         $this->choices = [];
 
         Session::put('cart', $cart);
-        
+
         $this->dispatch('pop');
-        
+
         $this->closeModal();
-      
+
         $this->dispatch('cartMessage', title: 'Cart item has been updated');
     }
 
@@ -258,4 +256,43 @@ class Index extends Component
         session()->put('cart', $this->cart_items);
         $this->dispatch('cartUpdated');
     }
+
+    public function add($index)
+    {
+       
+        $cart = Session::get('cart', []);
+
+        if (isset($cart[$index])) {
+            $cart[$index]['quantity']++;
+        }
+
+        Session::put('cart', $cart);
+    }
+
+    public function subs($index)
+{
+    $cart = Session::get('cart', []);
+
+    if (isset($cart[$index])) {
+
+        if ($cart[$index]['quantity'] > 1) {
+            $cart[$index]['quantity']--;
+        } else {
+            $cart[$index]['quantity'] = 1;
+        }
+
+        Session::put('cart', $cart);
+    }
+}
+
+public function remove($index)
+{
+    $cart = Session::get('cart', []);
+
+    if (isset($cart[$index])) {
+        unset($cart[$index]);
+        Session::put('cart', $cart);
+    }
+}
+
 }

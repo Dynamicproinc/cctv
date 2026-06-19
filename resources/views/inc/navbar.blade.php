@@ -5,8 +5,10 @@
                         <div class="d-flex justify-content-between dark-1 text-white">
                             <div>
                                 <a href="{{ route('shop.index')}}">
-                                    <img src="{{ asset('images/logo.jpg') }}" alt="MBrothers-food.com"
+                                    <img src="{{ asset('images/cctv_logo.svg') }}" alt="{{ env('APP_NAME') }}"
                                     style="width: 50px; height:auto;">
+                                    {{-- <img src="https://t3.ftcdn.net/jpg/17/74/13/70/360_F_1774137043_MkhbnOQQ4SpHTuFCft2L9w4NZcXn55a6.jpg" alt="MBrothers-food.com"
+                                    style="width: 50px; height:auto;"> --}}
                                 </a>
                             </div>
                             <div>

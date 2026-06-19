@@ -1,7 +1,7 @@
 <div>
 
 <div>
-    @include('inc.cart_items')
+    @include('inc.simple-cart')
 </div>
 
 <div class="bg-white p-3 rounded">
