@@ -245,7 +245,7 @@ class Index extends Component
         $this->dispatch('pop');
 
         $this->closeModal();
-        $this->show_products = false;
+        $this->show_products = true;
 
         $this->dispatch('cartMessage', title: 'Cart item has been updated');
     }
