@@ -19,7 +19,7 @@
             <div>
                 @if (!$show_products)
                     <div class="add-camera mb-3">
-                        <button class="btn btn-outline-dark rounded-pill" wire:click="showProducts">
+                        <button class="btn btn-dark rounded-pill" wire:click="showProducts">
                            {{ __('Add camera') }}
                         </button>
                     </div>
@@ -69,7 +69,7 @@
                     <span class="spinner-border spinner-border-sm" role="status" wire:loading wire:target="nextStep">
                             <span class="visually-hidden">Loading...</span>
                         </span>
-                    {{ __('Next Step') }}
+                    {{ __('Next step') }}
                 </button>
             </div>
             
