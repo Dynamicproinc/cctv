@@ -21,6 +21,9 @@ body {
 .btn-lg{
     /* padding: 16px; */
 }
+.btn{
+    text-transform:uppercase;
+}
 .app-content-panel{
     display: flex;
     justify-content: center;
