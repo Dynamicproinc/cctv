@@ -1,4 +1,6 @@
 @extends('home')
+@section('title', __('Your Quotation -'))
+@section('title-bar', __('Your Quotation'))
 @section('acc-content')
     <div>
       <div class="">
