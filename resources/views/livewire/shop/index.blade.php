@@ -61,7 +61,7 @@
 
                 {{-- --}}
             </div>
-             <div>
+             <div class="mb-5">
                 @include('inc.cart_items')
             </div>
             <div class="fixed-bottom">

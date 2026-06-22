@@ -22,6 +22,8 @@ class Checkout extends Component
     public $location_id;
     public $address;
     public $quotation_deadline;
+    public $c_requirement_id;
+    
 
     public function render()
     {
@@ -67,6 +69,7 @@ class Checkout extends Component
             'deadline' => $validatedData['quotation_deadline'] ?? null,
             'status'=> 'active',
         ]);
+        $this->c_requirement_id = $customerRequirement->id;
 
         // save line items to c_r_items table
         $cartItems = session()->get('cart', []);
@@ -156,32 +159,49 @@ class Checkout extends Component
 }
 
   // send email
-$userName = $this->first_name. ' ' .$this->last_name;
+// $userName = $this->first_name. ' ' .$this->last_name;
+// $recipient = auth()->user()->email;
+
+// $body = "
+// <h3>Dear {$userName},</h3>
+
+// <p>Thank you for using our platform. This email confirms that we have received your request.</p>
+
+// <p>We are now forwarding your requirements to our professional CCTV experts to provide the best possible solutions. You will receive multiple quotations for your request, allowing you to compare options and choose the one that best suits your needs.</p>
+
+// <p>Once you select a preferred option, we will connect you with the relevant service providers, and you can continue the process directly with them. You can manage everything conveniently through your account.</p>
+
+// <p>Please note that our platform serves as a marketplace connecting CCTV customers with service providers. We are not responsible for any financial transactions or agreements you make with service providers. Our role is solely to facilitate the connection between customers and suppliers.</p>
+
+// <p>Thank you for choosing our platform. We look forward to helping you find the best CCTV solution.</p>
+
+// <p>Best regards,<br>
+// [Your Company Name]<br>
+// [Contact Information]</p>
+// ";
+
+// Mail::send([], [], function ($message) use ($recipient, $body) {
+//     $message->to($recipient)
+//             ->subject('Confirmation of Your CCTV Service Request')
+//             ->html($body, 'text/html'); // send as raw HTML
+// });
+
+//send email with template
+// get requirement details
+$customerRequirement = CustomerRequirement::find($this->c_requirement_id);
+if (!$customerRequirement) {
+    // Handle the case where the customer requirement is not found
+    return redirect()->route('shop.index')->with('error', 'Customer requirement not found.');
+}
 $recipient = auth()->user()->email;
-
-$body = "
-<h3>Dear {$userName},</h3>
-
-<p>Thank you for using our platform. This email confirms that we have received your request.</p>
-
-<p>We are now forwarding your requirements to our professional CCTV experts to provide the best possible solutions. You will receive multiple quotations for your request, allowing you to compare options and choose the one that best suits your needs.</p>
-
-<p>Once you select a preferred option, we will connect you with the relevant service providers, and you can continue the process directly with them. You can manage everything conveniently through your account.</p>
-
-<p>Please note that our platform serves as a marketplace connecting CCTV customers with service providers. We are not responsible for any financial transactions or agreements you make with service providers. Our role is solely to facilitate the connection between customers and suppliers.</p>
-
-<p>Thank you for choosing our platform. We look forward to helping you find the best CCTV solution.</p>
-
-<p>Best regards,<br>
-[Your Company Name]<br>
-[Contact Information]</p>
-";
-
-Mail::send([], [], function ($message) use ($recipient, $body) {
+Mail::send('emails.e-quotation', ['customer_requirement' => $customerRequirement], function ($message) use ($recipient) {
     $message->to($recipient)
-            ->subject('Confirmation of Your CCTV Service Request')
-            ->html($body, 'text/html'); // send as raw HTML
+            ->subject('Confirmation of Your CCTV Service Request');
 });
+
+
+
+
 
     // Clear session AFTER success
     session()->forget(['cart', 'user_choices', 'user_choices_collection']);
