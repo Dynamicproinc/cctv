@@ -63,6 +63,7 @@
             </div>
              <div class="mb-5">
                 @include('inc.cart_items')
+               
             </div>
             <div class="fixed-bottom">
                 <button class="btn btn-lg btn-dark form-control rounded-0" wire:click="nextStep" wire:loading.attr="disabled" @if(empty(session('cart', []))) disabled @endif>

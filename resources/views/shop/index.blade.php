@@ -1,6 +1,6 @@
 @extends('layouts.app')
-@section('title', 'Your quotation -')
-@section('title-bar', 'Your quotation')
+@section('title', 'New Request -')
+@section('title-bar', 'New Request')
 @section('content')
 
    

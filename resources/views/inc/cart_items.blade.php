@@ -69,7 +69,7 @@
     @if(empty(request()->session()->get('cart', [])))
 <div class="d-flex justify-content-center">
              <h2 class="not-found">
-            {{ __('Your quotation is empty') }}
+            {{ __('Start building your security system by adding a camera') }}
         </h2>
     </div>
 @endif

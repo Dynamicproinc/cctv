@@ -1,7 +1,7 @@
 @extends('home')
 
-@section('title', __('Your Quotation -'))
-@section('title-bar', __('Your Quotation'))
+@section('title', __('Your Request -'))
+@section('title-bar', __('Your Request'))
 
 @section('acc-content')
 <div class="container">
@@ -80,9 +80,12 @@
                                     <td class="text-muted">{{ $key + 1 }}</td>
                                     <td class="fw-medium">{{ $item->line_item }}</td>
                                     <td>
-                                        <span class="badge bg-primary">
-                                            {{$item->is_priced ? $item->price : ''}}
-                                        </span>
+                                      @if ($item->is_price)
+                                        
+                                      <span class="badge bg-primary">
+                                          {{$item->quantity}}
+                                      </span>
+                                      @endif
                                     </td>
                                 </tr>
                             @endforeach
