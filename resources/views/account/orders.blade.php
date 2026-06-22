@@ -1,63 +1,102 @@
 @extends('home')
+
 @section('title', __('Your Quotation -'))
 @section('title-bar', __('Your Quotation'))
+
 @section('acc-content')
-    <div>
-        <div class="">
-            <div class="d-flex justify-content-between mb-3">
-                <h4 class="fw-bolder"></h4>
-                <div>
-                    {{-- also need confirm before delete --}}
-                    <form action="{{ route('request.delete', $requirement->id) }}" method="POST"
-                        onsubmit="return confirm('Are you sure you want to delete this item?');">
-                        @csrf
-                        @method('DELETE')
+<div class="container">
 
-                        <button type="submit" class="btn btn-sm btn-outline-danger">
-                            {{ __('Delete') }}
-                        </button>
-                    </form>
+    <!-- HEADER CARD -->
+    <div class="card shadow-sm mb-4">
+        <div class="card-body d-flex justify-content-between align-items-start">
 
+            <div>
+                <h4 class="mb-1 fw-bold">
+                    Ref#: {{ $requirement->order_number }}
+                </h4>
+
+                <div class="text-muted small">
+                    Created: {{ $requirement->created_at->format('d M Y') }}
+                </div>
+
+                <div class="mt-2 d-flex gap-2 flex-wrap">
+                    <span class="badge bg-secondary">
+                        Status: {{ ucfirst($requirement->status) }}
+                    </span>
+
+                    <span class="badge bg-warning text-dark">
+                        Deadline: {{ $requirement->deadline }}
+                    </span>
+
+                    <span class="badge bg-info text-dark">
+                        Items: {{ count($requirement->getLineItems()) }}
+                    </span>
+
+                    <span class="badge bg-success">
+                        Quotations: 0
+                    </span>
                 </div>
             </div>
-            <div class="mb-3">
-                <div>
-                    <h4 class="fw-bolder">Ref#: {{ $requirement->order_number }}</h4>
-                </div>
-                <div>Created at: {{ $requirement->created_at->format('d F Y') }}</div>
-                <div>Deadline : {{ $requirement->deadline }}</div>
-                <div>Status : {{ $requirement->status }}</div>
-                <div>Quotations received: 0</div>
-            </div>
-            <table class="table table-striped">
-                <thead>
-                    <tr>
 
-                        <th scope="col">#</th>
-                        <th scope="col">Line Item</th>
-                        <th scope="col">Quantity</th>
-                        {{-- <th scope="col">Last</th>
-      <th scope="col">Handle</th> --}}
-                    </tr>
-                </thead>
-                <tbody>
+            <!-- ACTION -->
+            <form action="{{ route('request.delete', $requirement->id) }}"
+                  method="POST"
+                  onsubmit="return confirm('Are you sure you want to delete this request?');">
+                @csrf
+                @method('DELETE')
 
-                    @if (count($requirement->getLineItems()) > 0)
-                        @foreach ($requirement->getLineItems() as $key => $item)
-                            <tr>
-                                <th scope="row">{{ $key + 1 }}</th>
-                                <td>{{ $item->line_item }}</td>
-                                <td>{{ $item->quantity }}</td>
+                <button class="btn btn-outline-danger btn-sm">
+                    Delete request
+                </button>
+            </form>
 
-                            </tr>
-                        @endforeach
-                    @else
-                        <tr>
-                            <td colspan="3">{{ __('No orders found') }}</td>
-                        </tr>
-                    @endif
-                </tbody>
-            </table>
         </div>
     </div>
+
+    <!-- LINE ITEMS CARD -->
+    <div class="card shadow-sm">
+        <div class="card-header bg-white">
+            <h5 class="mb-0 fw-semibold">Line Items</h5>
+        </div>
+
+        <div class="card-body p-0">
+
+            @php $items = $requirement->getLineItems(); @endphp
+
+            @if(count($items) > 0)
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th style="width: 80px;">#</th>
+                                <th>Item Description</th>
+                                <th style="width: 150px;">Quantity</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            @foreach($items as $key => $item)
+                                <tr>
+                                    <td class="text-muted">{{ $key + 1 }}</td>
+                                    <td class="fw-medium">{{ $item->line_item }}</td>
+                                    <td>
+                                        <span class="badge bg-primary">
+                                            {{ $item->quantity }}
+                                        </span>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            @else
+                <div class="p-4 text-center text-muted">
+                    No line items found
+                </div>
+            @endif
+
+        </div>
+    </div>
+
+</div>
 @endsection
