@@ -41,12 +41,12 @@
             <!-- ACTION -->
             <form action="{{ route('request.delete', $requirement->id) }}"
                   method="POST"
-                  onsubmit="return confirm('Are you sure you want to delete this request?');">
+                  onsubmit="return confirm('Are you sure you want to cancel this request? this action cannot be undone.');">
                 @csrf
                 @method('DELETE')
 
                 <button class="btn btn-outline-danger btn-sm">
-                    Delete request
+                   {{__('Cancel request')}}
                 </button>
             </form>
 

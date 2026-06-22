@@ -21,6 +21,12 @@
                                                 
                                                 
                                                 @endforeach
+                                                 @foreach ($item['choices'] as $c_id => $choice)
+                                        <span
+                                            class="me-2 badge bg-light-subtle border border-light-subtle text-light-emphasis rounded-pill mb-2">
+                                            {{ \App\Models\Choice::where('id', $choice)->first()?->Choice_name }}
+                                        </span>
+                                    @endforeach
                                             </div>
                                     @endif
                                     </div>

@@ -10,7 +10,7 @@ use App\Models\Variant;
 use App\Models\InfoCollection;
 use Illuminate\Support\Facades\Session;
 
-use function Pest\Laravel\session;
+
 
 class Index extends Component
 {
@@ -74,7 +74,10 @@ class Index extends Component
     }
 
     public function mount($products)
+
     {
+
+    // dd(session()->get('cart'));
         // Session::forget('user_choices');
         $this->questions = InfoCollection::where('type', 'radio')->get();
         $this->multiple_choices = InfoCollection::where('type', 'checkbox')->get();

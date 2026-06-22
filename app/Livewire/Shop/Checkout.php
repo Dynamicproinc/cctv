@@ -52,7 +52,7 @@ class Checkout extends Component
             'phone_number' => 'nullable|string|max:20',
             'location_id' => 'nullable|integer',
             'address' => 'nullable|string|max:500',
-            'quotation_deadline' => 'required|date',
+            'quotation_deadline' => 'required|date|after:today',
         ]);
 
        try {
@@ -87,6 +87,16 @@ class Checkout extends Component
 
                     if ($variantModel) {
                         $product_line_item .= $variantModel->value . ", ";
+                    }
+                }
+            }
+            if (!empty($item['choices'])) {
+                foreach ($item['choices'] as $c_id => $choice) {
+
+                    $choiceModel = \App\Models\Choice::where('id', $choice)->first();
+
+                    if ($choiceModel) {
+                        $product_line_item .= $choiceModel->Choice_name . ", ";
                     }
                 }
             }
