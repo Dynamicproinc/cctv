@@ -26,6 +26,8 @@ Auth::routes();
 Auth::routes(['verify' => true]);
 //account
 Route::get('/my-account', [App\Http\Controllers\HomeController::class, 'index'])->name('myaccount');
+//delete request
+Route::delete('/my-account/request/{id}', [App\Http\Controllers\HomeController::class, 'deleteRequest'])->name('request.delete');
 // Route::get('/reviews/{product_slug}', [App\Http\Controllers\ReviewsController::class, 'showReviews'])->name('product.reviews');
 // Route::get('/my-account', [App\Http\Controllers\HomeController::class, 'index'])->name('myaccount');
 // Route::get('/my-account/order/{slug}', [App\Http\Controllers\HomeController::class, 'viewOrder'])->name('myaccount.vieworder');

@@ -79,4 +79,15 @@ class HomeController extends Controller
         
         return view('shop.checkout');
     }
+
+    public function deleteRequest($id){
+        $requirement = CustomerRequirement::where('customer_id', auth()->id())->where('id', $id)->first();
+        if($requirement){
+            $requirement->status = 'canceled';
+            $requirement->save();
+            return redirect()->route('myaccount')->with('success', __('Your request has been canceled successfully.'));
+        }
+
+        return redirect()->route('myaccount')->with('error', __('Request not found or you do not have permission to cancel this request.'));
+    }
 }
