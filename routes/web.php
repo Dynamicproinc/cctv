@@ -32,10 +32,12 @@ Route::get('/my-account', [App\Http\Controllers\HomeController::class, 'index'])
 // Route::get('/my-account/orders', [App\Http\Controllers\HomeController::class, 'orders'])->name('myaccount.orders');
 // Route::get('/my-account/coupons', [App\Http\Controllers\HomeController::class, 'coupons'])->name('myaccount.coupons');
 Route::get('/checkout', [App\Http\Controllers\HomeController::class, 'checkout'])->name('checkout');
+Route::get('/addtional-information', [App\Http\Controllers\ShopController::class ,'extraInfo'])->name('extra.info');
 
 
 
 Route::get('/', [App\Http\Controllers\ShopController::class, 'index'])->name('shop.index');
+Route::get('/my-quote', [App\Http\Controllers\ShopController::class, 'index'])->name('shop.index');
 // Route::get('/shop', [App\Http\Controllers\ShopController::class, 'index'])->name('shop.index');
 Route::get('/category/{category}', [App\Http\Controllers\ShopController::class, 'category'])->name('shop.category');
 // Route::get('/shop/{slug}', [App\Http\Controllers\ShopController::class, 'showProduct'])->name('shop.showproduct');

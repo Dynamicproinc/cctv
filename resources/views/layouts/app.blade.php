@@ -38,7 +38,21 @@
 
 <body>
     <div id="app">
-        @include('inc.navbar')
+
+        {{-- @include('inc.navbar') --}}
+        {{-- dynamic navbar --}}
+          <nav class="navbar bg-body-tertiary fixed-top">
+  <div class="container-fluid">
+    <a class="navbar-brand">
+      <i class="bi bi-arrow-left me-3"></i>
+      <span>@yield('title-bar')</span>
+    </a>
+    <span>
+      <a href="#"><i class="bi bi-question-circle"></i></a>
+    </span>
+  </div>
+</nav>
+        {{-- end dynamc navbar --}}
         {{-- sidebar --}}
         {{-- <div id="snav" class="sidenav">
             <div class="nv-wrap">
@@ -47,9 +61,9 @@
             </div>
         </div> --}}
         {{-- sidebar end --}}
-        <div style="height:100px"></div>
+        <div style="height:75px"></div>
 
-        <main class="container" style="min-height: 100vh; margin-bottom:100px">
+        <main class="container-fluid">
             <div class="row justify-content-center">
                 <div class="col-lg-8">
                     @yield('content')
@@ -57,15 +71,15 @@
             </div>
         </main>
        
-        <footer class="text-center py-3 d-flex justify-content-center align-items-center" style="height:150px">
+        {{-- <footer class="text-center py-3 d-flex justify-content-center align-items-center" style="height:150px">
   <div class="container ">
     <div><strong>{{ __('Open Hours')}}</strong></div>
     <div><strong>{{ __('Monday to Friday 11:00 – 17:00')}}</strong></div>
-    {{-- <div><strong>{{ __('Saturday 10:00 – 12:00')}}</strong></div> --}}
+   
     <div class="mb-3">{{__('For support, contact')}} <a href="mailto:info@mbrothers-food.com" class="text-white">info@mbrothers-food.com</a></div>
     <div class="gray-5">&copy;  {{ date('Y') }} {{ config('app.name') }}. {{__('All rights reserved.')}}</div>
   </div>
-</footer>
+</footer> --}}
 {{--  notice modal--}}
   @php
             $status = App\Models\ShopStatus::whereDate('closing_date', today())

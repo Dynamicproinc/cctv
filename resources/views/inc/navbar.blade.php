@@ -18,7 +18,7 @@
                                @guest
                                 <a href="{{ route('login')}}" type="button" class="btn btn-outline-light">
                                     <i class="bi bi-person"></i>
-                                    {{__('My Account')}}
+                                    {{__('Login')}}
                                 </a>
                                 @endguest
 {{-- 
@@ -27,6 +27,10 @@
 
                                 </a> --}}
                                  @auth
+                                 <a href="{{ route('login')}}" type="button" class="btn btn-outline-light">
+                                    <i class="bi bi-card-checklist"></i>
+                                    {{__('My Quote')}}
+                                </a>
                                 <a href="{{route('myaccount')}}" class="btn btn-default text-capitalize">
                                     @if (\App\Models\User::find(auth()->user()->id)->avatar)
                                     <img class="xs-avatar" src="{{\App\Models\User::find(auth()->user()->id)->avatar}}" alt="">

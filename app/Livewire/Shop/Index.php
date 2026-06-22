@@ -34,6 +34,7 @@ class Index extends Component
     public $answers = [];
     public $multiple_choices = [];
     public $m_choices = [];
+    public $show_products = false;
 
     protected $queryString = [
         'category' => ['except' => ''] // optional, removes empty category from URL
@@ -60,7 +61,17 @@ class Index extends Component
         return $rules;
     }
 
+    public function nextStep(){
+       if (empty(request()->session()->get('cart', []))) {
+        return redirect()->back()->with('error', 'Cart is empty');
+    }
 
+    return redirect()->route('extra.info');
+    }
+
+    public function showProducts(){
+        $this->show_products = true;
+    }
 
     public function mount($products)
     {
@@ -74,17 +85,17 @@ class Index extends Component
         $this->variant = [];
     }
 
-    public function save()
-    {
+    // public function save()
+    // {
 
 
-        // dd($this->m_choices);
-        $this->validate();
+       
+    //     $this->validate();
 
-        Session::put('user_choices', $this->answers);
-        Session::put('user_choices_collection', $this->m_choices);
-        return redirect()->to(route('checkout'));
-    }
+    //     Session::put('user_choices', $this->answers);
+    //     Session::put('user_choices_collection', $this->m_choices);
+    //     return redirect()->to(route('checkout'));
+    // }
     public function refreshCart()
     {
         $this->cart_items = session('cart', []);
@@ -135,10 +146,12 @@ class Index extends Component
     {
 
         $this->product_modal = false;
+        $this->show_products = true;
         // $this->resetVariant();
         $this->variant = [];
         $this->choices = [];
         $this->selected_product = null;
+        
     }
 
     public function increment()
@@ -232,6 +245,7 @@ class Index extends Component
         $this->dispatch('pop');
 
         $this->closeModal();
+        $this->show_products = false;
 
         $this->dispatch('cartMessage', title: 'Cart item has been updated');
     }
