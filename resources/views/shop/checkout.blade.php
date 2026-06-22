@@ -1,5 +1,6 @@
 @extends('layouts.app')
-@section('title', __('Checkout -'))
+@section('title', __('Finalize Quotation -'))
+@section('title-bar', __('Finalize Quotation'))
 @section('content')
     <div class="mb-5">
        
