@@ -156,7 +156,7 @@ class Checkout extends Component
 }
 
   // send email
-    $userName = $this->first_name. ' ' .$this->last_name;
+$userName = $this->first_name. ' ' .$this->last_name;
 $recipient = auth()->user()->email;
 
 $body = "
