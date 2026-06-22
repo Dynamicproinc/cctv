@@ -19,8 +19,8 @@
             <div>
                 @if (!$show_products)
                     <div class="add-camera mb-3">
-                        <button class="btn btn-link text-decoration-none" wire:click="showProducts">
-                            <i class="bi bi-plus"></i> {{ __('Add camera') }}
+                        <button class="btn btn-outline-dark rounded-pill" wire:click="showProducts">
+                           {{ __('Add camera') }}
                         </button>
                     </div>
                 @else
@@ -65,7 +65,7 @@
                 @include('inc.cart_items')
             </div>
             <div class="fixed-bottom">
-                <button class="btn btn-lg btn-warning form-control rounded-0" wire:click="nextStep" wire:loading.attr="disabled" @if(empty(session('cart', []))) disabled @endif>
+                <button class="btn btn-lg btn-dark form-control rounded-0" wire:click="nextStep" wire:loading.attr="disabled" @if(empty(session('cart', []))) disabled @endif>
                     <span class="spinner-border spinner-border-sm" role="status" wire:loading wire:target="nextStep">
                             <span class="visually-hidden">Loading...</span>
                         </span>

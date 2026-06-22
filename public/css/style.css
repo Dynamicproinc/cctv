@@ -8,17 +8,18 @@ body {
     font-style: normal !important;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    background: #dfdfdf !important;
+    /* background: #dfdfdf !important; */
+    background: #fafafa !important;
 }
 
-button , .form-title{
+ .form-title{
     font-size: 12px !important;
     font-weight: 700 !important;
     text-transform: uppercase;
     letter-spacing: 1px;
 }
 .btn-lg{
-    padding: 16px;
+    /* padding: 16px; */
 }
 .app-content-panel{
     display: flex;

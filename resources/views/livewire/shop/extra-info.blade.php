@@ -112,11 +112,11 @@
 
                 <div class="fixed-bottom">
                     {{-- <p class="small">{{ __('Press Continue to proceed to the next step of the solution.') }}</p> --}}
-                    <button class="btn btn-warning w-100 btn-lg rounded-0" wire:click="save" wire:loading.attr="disabled">
+                    <button class="btn btn-dark w-100 btn-lg rounded-0" wire:click="save" wire:loading.attr="disabled">
                         <span class="spinner-border spinner-border-sm" role="status" wire:loading wire:target="save">
                             <span class="visually-hidden">Loading...</span>
                         </span>
-                        {{ __('Continue') }}
+                        {{ __('Finalize') }}
                     </button>
                     {{-- @if (session()->has('error'))
                     <div class="alert alert-danger mt-3">
