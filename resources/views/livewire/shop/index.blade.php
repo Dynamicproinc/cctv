@@ -29,7 +29,7 @@
 
                             @foreach ($products as $item)
                                 <div class="col-12 col-lg-6">
-                                    <div class="p-card bg-white shadow-sm d-flex"
+                                    <div class="p-card bg-white shadow-sm d-flex no-select"
                                         wire:click="selectProduct({{ $item->id }})" style="cursor: pointer;">
                                         <div class="p-card-img">
                                             <img src="{{ $item->image_path }}" alt="{{ $item->title }}">
