@@ -81,7 +81,7 @@
                                     <td class="fw-medium">{{ $item->line_item }}</td>
                                     <td>
                                         <span class="badge bg-primary">
-                                            {{$item->is_priced ? $item->price : ''}} x {{$item->quantity}}
+                                            {{$item->is_priced ? $item->price : ''}}
                                         </span>
                                     </td>
                                 </tr>
