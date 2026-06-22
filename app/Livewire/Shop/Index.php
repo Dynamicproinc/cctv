@@ -152,6 +152,7 @@ class Index extends Component
         $this->choices = [];
         $this->selected_product = null;
         
+        
     }
 
     public function increment()
@@ -243,9 +244,9 @@ class Index extends Component
         Session::put('cart', $cart);
 
         $this->dispatch('pop');
-
+        $this->show_products = false;
         $this->closeModal();
-        $this->show_products = true;
+      
 
         $this->dispatch('cartMessage', title: 'Cart item has been updated');
     }
