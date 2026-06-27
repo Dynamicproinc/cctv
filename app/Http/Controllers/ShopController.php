@@ -41,8 +41,6 @@ class ShopController extends Controller
         return view('shop.cart');
     }
 
-    public function extraInfo(){
-        return view('shop.extra-info');
-    }
+   
     
 }

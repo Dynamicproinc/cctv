@@ -80,6 +80,10 @@ class HomeController extends Controller
         return view('shop.checkout');
     }
 
+     public function extraInfo(){
+        return view('shop.extra-info');
+    }
+
     public function deleteRequest($id){
         $requirement = CustomerRequirement::where('customer_id', auth()->id())->where('id', $id)->first();
         if($requirement){
