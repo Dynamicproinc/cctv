@@ -1,6 +1,9 @@
 @extends('layouts.app')
 @section('title', __('Additional details -'))
 @section('title-bar',__('Additional details'))
+@section('alt-link')
+<a href="#"><i class="bi bi-question-circle"></i></a>
+@endsection
 @section('content')
     <div class="mb-5">
         {{-- @if(session('cart') && count(session('cart')> 0)) --}}
