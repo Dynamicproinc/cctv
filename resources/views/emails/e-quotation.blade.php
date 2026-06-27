@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>Invoice</title>
+  <title>{{__('Request')}}</title>
 </head>
 <body style="margin:0; padding:20px; font-family: Arial, sans-serif; background:#f9f9f9;">
 
@@ -11,8 +11,8 @@
     <!-- Header -->
     <tr>
       <td style="padding:15px; border-bottom:1px solid #eee;">
-        <h2 style="margin:0; font-size:18px;">INVOICE</h2>
-        <p style="margin:5px 0 0; font-size:12px; color:#666;">Invoice #{{ $customer_requirement->order_number }}</p>
+        <h2 style="margin:0; font-size:18px;">{{__('Request')}}</h2>
+        <p style="margin:5px 0 0; font-size:12px; color:#666;">Request #{{ $customer_requirement->order_number }}</p>
         <p style="margin:5px 0 0; font-size:12px; color:#666;">Date: {{ $customer_requirement->created_at->format('d F Y') }}</p>
         <p style="margin:5px 0 0; font-size:12px; color:#666;">Date: {{ $customer_requirement->deadline }}</p>
 
