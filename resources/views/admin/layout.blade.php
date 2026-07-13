@@ -145,7 +145,7 @@
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" href="{{ route('admin.products.index')}}">{{ __('Products')}}</a></li>
             <li><a class="dropdown-item" href="{{ route('admin.addproduct')}}">{{ __('Add Products')}}</a></li>
-            <li><a class="dropdown-item" href="{{ route('admin.reviews')}}">{{ __('Reviews')}}</a></li>
+            {{-- <li><a class="dropdown-item" href="{{ route('admin.reviews')}}">{{ __('Reviews')}}</a></li> --}}
             
           </ul>
         </li>
