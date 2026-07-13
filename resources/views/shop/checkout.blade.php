@@ -2,7 +2,7 @@
 @section('title', __('Finalize Quotation -'))
 @section('title-bar', __('Finalize Quotation'))
 @section('alt-link')
-<a href="#"><i class="bi bi-question-circle"></i></a>
+<a href="#"><i class="bi bi-handbag"></i></a>
 @endsection
 @section('content')
     <div class="mb-5">

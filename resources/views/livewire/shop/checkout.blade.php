@@ -4,7 +4,7 @@
         @include('inc.simple-cart')
     </div>
     <h2 class="form-title">
-        {{ __('Additional Information') }}
+        {{ __('System Information') }}
     </h2>
     <div class="bg-white p-3 rounded">
         <ul class="list-group list-group-flush">
