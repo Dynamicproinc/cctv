@@ -32,13 +32,13 @@
                                 <div class="d-flex flex-wrap">
                                     @foreach ($item['variants'] as $v_id => $variant)
                                         <span
-                                            class="me-2 badge bg-light-subtle border border-light-subtle text-light-emphasis rounded-pill mb-2">
+                                            class="me-2 badge bg-light-subtle  text-light-emphasis rounded-pill mb-2">
                                             {{ \App\Models\Variant::where('id', $variant)->first()?->value }}
                                         </span>
                                     @endforeach
                                     @foreach ($item['choices'] as $c_id => $choice)
                                         <span
-                                            class="me-2 badge bg-light-subtle border border-light-subtle text-light-emphasis rounded-pill mb-2">
+                                            class="me-2 badge bg-light-subtle  text-light-emphasis rounded-pill mb-2">
                                             {{ \App\Models\Choice::where('id', $choice)->first()?->Choice_name }}
                                         </span>
                                     @endforeach
