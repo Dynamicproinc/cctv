@@ -155,18 +155,18 @@
           </a>
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" href="{{ route('admin.orders.index')}}">{{ __('Orders')}}</a></li>
-            <li><a class="dropdown-item" href="{{ route('admin.orders.notification')}}">{{ __('Order Notification')}}</a></li>
+            {{-- <li><a class="dropdown-item" href="{{ route('admin.orders.notification')}}">{{ __('Order Notification')}}</a></li> --}}
             
           </ul>
         </li>
        <li class="nav-item">
-          <a class="nav-link" href="{{route('admin.kitchen')}}">{{ __('Kitchen Orders')}}</a>
+          {{-- <a class="nav-link" href="{{route('admin.kitchen')}}">{{ __('Kitchen Orders')}}</a> --}}
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="{{route('admin.users.users')}}">{{ __('Users')}}</a>
+          {{-- <a class="nav-link" href="{{route('admin.users.users')}}">{{ __('Users')}}</a> --}}
        <li class="nav-item">
         
-          <a class="nav-link" href="{{route('admin.point.pointmanager')}}">{{ __('Point Manager')}}</a>
+          {{-- <a class="nav-link" href="{{route('admin.point.pointmanager')}}">{{ __('Point Manager')}}</a> --}}
         </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -174,7 +174,7 @@
           </a>
           <ul class="dropdown-menu">
             
-            <li><a class="dropdown-item" href="{{ route('admin.setting.shopstatus')}}">{{ __('Shop Status')}}</a></li>
+            {{-- <li><a class="dropdown-item" href="{{ route('admin.setting.shopstatus')}}">{{ __('Shop Status')}}</a></li> --}}
             
           </ul>
         </li>
