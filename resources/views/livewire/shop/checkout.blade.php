@@ -74,7 +74,7 @@
             <div class="form-floating">
                 <select class="form-select" id="floatingSelect" aria-label="Floating label select example"
                     wire:model="location_id">
-                    <option selected>Open this select menu</option>
+                    <option selected>Select your location</option>
                     <option value="1">One</option>
                     <option value="2">Two</option>
                     <option value="3">Three</option>
