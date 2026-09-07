@@ -44,4 +44,11 @@ class CustomerRequirement extends Model
     public function isRead(){
         return ReadItem::where('user_id', auth()->id())->where('item_id', $this->id)->first();
     }
+
+    public function location()
+    {
+        return $this->belongsTo(Location::class, 'location_id', 'location_code');
+    }
+
+    
 }

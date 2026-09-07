@@ -34,6 +34,8 @@
               <strong>To:</strong><br>
               {{ $customer_requirement->first_name }} {{ $customer_requirement->last_name }}<br>
               {{ $customer_requirement->address }}<br>
+              {{ $customer_requirement->phone_number }}<br>
+              {{ $customer_requirement->location->location_name ?? $customer_requirement->location_id }}<br>
               {{ $customer_requirement->email }},
             </td>
           </tr>

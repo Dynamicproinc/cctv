@@ -74,15 +74,25 @@
             <div class="form-floating">
                 <select class="form-select" id="floatingSelect" aria-label="Floating label select example"
                     wire:model="location_id">
-                    <option selected>Select your location</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
+                    <option value="" selected>{{ __('Select a location') }}</option>
+                    @foreach($this->locations as $location)
+                        <option value="{{ $location->location_code }}">{{ $location->location_name }}</option>
+                    @endforeach
                 </select>
                 <label for="floatingSelect">{{ __('Location') }}</label>
                 @error('location_id')
                     <div class="text-danger">{{ $message }}</div>
                 @enderror
+            </div>
+        </div>
+        <div class="mb-3">
+            <div class="form-floating">
+                <input type="text" class="form-control" id="floatingInput" placeholder="" wire:model="phone_number">
+                <label for="floatingInput">{{ __('Phone Number') }}</label>
+                @error('phone_number')
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
+
             </div>
         </div>
         <div class="mb-3">

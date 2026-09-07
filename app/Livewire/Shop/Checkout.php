@@ -10,6 +10,7 @@ use App\Models\CollectionOption;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Mail;
+use App\Models\Location;
 
 
 class Checkout extends Component
@@ -23,10 +24,11 @@ class Checkout extends Component
     public $address;
     public $quotation_deadline;
     public $c_requirement_id;
-    
+    public $locations;
 
     public function render()
     {
+        
         return view('livewire.shop.checkout');
     }
 
@@ -40,6 +42,8 @@ class Checkout extends Component
 
             return redirect()->route('shop.index');
         }
+
+        $this->locations = Location::orderBy('location_name')->get();
     }
 
     public function placeOrder()
@@ -49,10 +53,15 @@ class Checkout extends Component
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
 
-            'phone_number' => 'nullable|string|max:20',
-            'location_id' => 'nullable|integer',
+            'phone_number' => 'required|string|max:20',
+            'location_id' => 'required|string|exists:locations,location_code',
             'address' => 'nullable|string|max:500',
             'quotation_deadline' => 'required|date|after:today',
+        ],
+        [
+            'location_id.exists' => 'The selected location is invalid. Please select a valid location.',
+            'location_id.required' => 'Please select a location.',
+            'phone_number.string' => 'The phone number must be a valid.',
         ]);
 
        try {
